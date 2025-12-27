@@ -36,6 +36,17 @@ fn main() {
 
     println!("Home: {}", ip_address_type(&home));
     println!("Loopback: {}", ip_address_type(&loopback));
+
+    // Message
+    let m1 = Message::Quit;
+    let m2 = Message::Move { x: 10, y: 20 };
+    let m3 = Message::Write(String::from("hello"));
+    let m4 = Message::ChangeColor(255, 0, 0);
+
+    m1.call();
+    m2.call();
+    m3.call();
+    m4.call();
 }
 
 #[derive(Debug)]
@@ -77,7 +88,7 @@ enum IpAddressType {
 fn ip_address_type(ip_kind: &IpAddressType) -> String {
     match ip_kind {
         IpAddressType::V4(a1, a2, a3, a4) => format!("{}.{}.{}.{}", a1, a2, a3, a4),
-        IpAddressType::V6(addr, ..) => addr.to_string()
+        IpAddressType::V6(addr) => addr.to_string()
     }
 }
 
@@ -95,3 +106,40 @@ enum IpAddr {
     V6(Ipv6Addr),
 }
  */
+
+#[derive(Debug)]
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32)
+}
+
+/*
+struct QuitMessage; // unit struct
+struct MoveMessage {
+    x: i32,
+    y: i32,
+}
+struct WriteMessage(String); // tuple struct
+struct ChangeColorMessage(i32, i32, i32); // tuple struct
+ */
+
+impl Message {
+    fn call(&self) {
+        match self {
+            Message::Quit => {
+                println!("Quitting the application...");
+            }
+            Message::Move { x, y } => {
+                println!("Moving to position: x={}, y={}", x, y);
+            }
+            Message::Write(text) => {
+                println!("Writing message: {}", text);
+            }
+            Message::ChangeColor(r, g, b) => {
+                println!("Changing color to RGB({}, {}, {})", r, g, b);
+            }
+        }
+    }
+}
