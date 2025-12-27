@@ -1,3 +1,7 @@
+use crate::option_enum::options;
+
+mod option_enum;
+
 fn main() {
     let four = IpAddrKind::V4;
     let six = IpAddrKind::V6;
@@ -47,6 +51,9 @@ fn main() {
     m2.call();
     m3.call();
     m4.call();
+    
+    // Options
+    options();
 }
 
 #[derive(Debug)]
